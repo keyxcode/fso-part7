@@ -66,7 +66,9 @@ const CreateNew = (props) => {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const [info, setInfo] = useState("");
+
   const navigate = useNavigate();
+  const { setNotification } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,7 +78,12 @@ const CreateNew = (props) => {
       info,
       votes: 0,
     });
+
     navigate("/");
+    setNotification(`a new anecdote ${content} created!`);
+    setTimeout(() => {
+      setNotification("");
+    }, 3000);
   };
 
   return (
@@ -176,13 +183,20 @@ const App = () => {
         </Link>
       </div>
 
+      <div>{notification}</div>
+
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route
           path="/anecdotes/:id"
           element={<Anecdote anecdote={anecdote} />}
         />
-        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route
+          path="/create"
+          element={
+            <CreateNew addNew={addNew} setNotification={setNotification} />
+          }
+        />
         <Route path="/about" element={<About />} />
       </Routes>
 
