@@ -89,9 +89,9 @@ const CreateNew = (props) => {
   };
 
   const handleClickReset = () => {
-    content.reset();
-    author.reset();
-    info.reset();
+    content.onReset();
+    author.onReset();
+    info.onReset();
   };
 
   return (
